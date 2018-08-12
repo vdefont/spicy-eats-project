@@ -88,9 +88,10 @@ app.post('/validateUser', async function (req, res) {
 })
 
 // Adds review and recalculates average spiciness for restaurant
-app.post('/addReview', async function (req, res) {
+// Operation: create or update
+app.post('/reviews/:operation', async function (req, res) {
   // Add review
-  var query = models.makeStandardQuery('reviews', 'create', req.body)
+  var query = models.makeStandardQuery('reviews', req.params.operation, req.body)
   var result = (await db.query(query))
   var insertId = result.insertId
 

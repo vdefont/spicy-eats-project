@@ -21,13 +21,24 @@ export default {
 <style lang="css" scoped>
 ul {
   display: flex;
+  flex-flow: row wrap;
 }
 li {
   margin: 5px;
+}
+.desktop li {
   max-width: 250px;
+}
+.mobile li {
+  max-width: 200px;
 }
 img {
   max-width: 100%;
+}
+.desktop img {
   max-height: 200px;
+}
+.mobile img {
+  max-height: 160px;
 }
 </style>

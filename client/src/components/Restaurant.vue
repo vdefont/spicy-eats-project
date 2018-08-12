@@ -31,6 +31,19 @@
         </div>
 
         <ul class="verticalList reviewsList">
+
+          <!-- Button to log in, write, or add review  -->
+          <li v-if="!$store.state.username">
+            <custom-button href="/#/login">
+              Log in to Add Review
+            </custom-button>
+          </li>
+          <li v-else-if="!writingReview">
+            <custom-button @custom-button-click="() => writingReview = true">
+              {{ previousReview ? 'Edit Your Existing Review' : 'Write a Review' }}
+            </custom-button>
+          </li>
+
           <review-list-item
             v-for="(review, key) in reviews"
             :key="key"
@@ -41,20 +54,18 @@
           <!-- Add review -->
           <li
             class="newReview"
-            v-if="$store.state.username"
+            v-if="writingReview"
             >
             <custom-form
               :inputs="newReviewFormInputs"
               @custom-form-submit="newReviewButtonClicked($event)"
+              :inputData="previousReview ? previousReview : {}"
+              :noclear="true"
               >
-              Add New Review
+              {{ previousReview ? 'Edit Review' : 'Add New Review' }}
             </custom-form>
           </li>
-          <li v-else>
-            <custom-button href="/#/login">
-              Log in to Add Review
-            </custom-button>
-          </li>
+
         </ul>
 
       </div>
@@ -85,6 +96,8 @@ export default {
       restaurant: {}, // restaurant data object
       editingRestaurant: false,
       reviews: [], // list of review data objects
+      previousReview: null, // User's past review (default is null)
+      writingReview: false,
       newReviewFormInputs: [
         {
           label: 'Spiciness (1-5)',
@@ -131,27 +144,51 @@ export default {
       })).data[0]
 
       // Get reviews
-      this.reviews = (await api('/getReviews', {
+      var reviews = (await api('/getReviews', {
         restaurantsId: restaurantsId
       })).data
+      this.reviews = reviews
+
+      // Determine if user already reviewed
+      if (this.$store.state.username) {
+        for (var i = 0; i < reviews.length; i += 1) {
+          var curReview = reviews[i]
+          var curUser = curReview.usersId
+          var alreadyReviewed = (this.$store.state.username === curUser)
+          if (alreadyReviewed) {
+            this.previousReview = curReview
+          }
+        }
+      }
     },
     newReviewButtonClicked: async function (newReview) {
       // Add new review
       newReview.usersId = this.$store.state.username
       newReview.restaurantsId = this.restaurant.id
-      var res = (await api('/addReview', newReview)).data
-      var reviewsId = res.insertId
+      var operation = this.previousReview ? 'update' : 'create'
+      var res = (await api(`/reviews/${operation}`, newReview)).data
+      var reviewsId = (operation === 'create') ? res.insertId : this.previousReview.id
 
       // Add images
       var photos = newReview.photos
       for (var i in photos) {
         var photo = photos[i]
         photo.reviewsId = reviewsId
-        await api('/standardQuery/photos/create', photo)
+        if (photo.id) {
+          var updatePhoto = {}
+          updatePhoto.id = photo.id
+          updatePhoto.caption = photo.caption
+          await api('/standardQuery/photos/update', updatePhoto)
+        } else {
+          await api('/standardQuery/photos/create', photo)
+        }
       }
 
       // Reload page
       await this.loadPage()
+
+      // No longer writing a review
+      this.writingReview = false
     },
     restaurantFieldUpdated: async function (data) {
       var field = data.field

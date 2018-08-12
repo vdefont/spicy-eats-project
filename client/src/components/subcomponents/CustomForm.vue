@@ -3,6 +3,7 @@ INPUT:
 - inputs: Array, {type, label, model [, validate, error]}
 - [error: String]
 - [noclear: Boolean]
+- [inputData: Object]
 OUTPUT: $emit('custom-form-submit', formData)
  -->
 <template lang="html">
@@ -25,7 +26,7 @@ OUTPUT: $emit('custom-form-submit', formData)
 
           <multi-image-caption-input
             v-else-if="input.type == 'multi-image-caption'"
-            :reset="Object.keys(formData).length == 0"
+            :inputPhotos="inputData[input.model] ? inputData[input.model] : []"
             @new-data="formData[input.model] = $event"
             >
           </multi-image-caption-input>
@@ -64,8 +65,20 @@ export default {
   },
   props: {
     inputs: Array, // Each input is object w/ properties: "type", "label", "model" [, "validate", "error"]
-    error: String,
-    noclear: Boolean
+    error: {
+      type: String,
+      default: ''
+    },
+    noclear: {
+      type: Boolean,
+      default: false
+    },
+    inputData: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
   },
   data () {
     return {
@@ -114,6 +127,9 @@ export default {
         this.$emit('custom-form-submit', formData)
       }
     }
+  },
+  mounted () {
+    this.formData = this.inputData
   }
 }
 </script>

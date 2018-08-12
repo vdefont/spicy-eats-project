@@ -1,5 +1,5 @@
 <!--
-IN: reset (to clear photos)
+IN: photos array - [ {photo, caption}, ... ]
 OUT: $emit('new-data', photos)
 -->
 
@@ -49,7 +49,7 @@ export default {
     ImageUploader
   },
   props: {
-    reset: Boolean
+    inputPhotos: Array
   },
   data () {
     return {
@@ -77,13 +77,8 @@ export default {
       this.emitEvent()
     }
   },
-  watch: {
-    reset: {
-      immediate: true,
-      handler: function (val) {
-        if (val) this.photos = []
-      }
-    }
+  mounted () {
+    this.photos = this.inputPhotos
   }
 }
 </script>
