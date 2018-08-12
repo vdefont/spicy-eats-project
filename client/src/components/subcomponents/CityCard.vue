@@ -25,15 +25,22 @@ export default {
 
 <style lang="css" scoped>
 button {
-  margin: 10px;
   border: 1px solid #720300;
   background-color: #720300;
-  width: 180px;
-  height: 100px;
   color:white;
   display:flex;
   justify-content: center;
   align-items: center;
+}
+.desktop button {
+  width: 180px;
+  height: 100px;
+  margin: 10px;
+}
+.mobile button {
+  width: 110px;
+  height: 70px;
+  margin: 5px;
 }
 
 button:hover {

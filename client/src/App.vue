@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div :class="mobileClass" id="app">
     <header>
       <a :href="$store.state.city.id ? '/#/city/' + $store.state.city.id : '/#/'">
         <div class="hugeText">
@@ -27,6 +27,22 @@ import CustomButton from '@/components/subcomponents/CustomButton'
 export default {
   components: {
     CustomButton
+  },
+  data () {
+    return {
+      isMobile: window.innerWidth <= 600
+    }
+  },
+  computed: {
+    mobileClass: function () {
+      if (this.isMobile) return 'mobile'
+      else return 'desktop'
+    }
+  },
+  mounted () {
+    addEventListener('resize', () => {
+      this.isMobile = innerWidth <= 600
+    })
   }
 }
 </script>
@@ -58,7 +74,6 @@ export default {
   padding: 0px;
   text-decoration: none;
   color: black;
-  font: 1em "Georgia";
 }
 
 html {
@@ -87,11 +102,24 @@ ul, li {
 }
 
 /* Text styles  */
-.hugeText {
+.desktop .hugeText {
   font: 4em "Georgia";
 }
-.largeText {
+.desktop .largeText {
   font: 2em "Georgia";
+}
+.desktop * {
+  font: 1em "Georgia";
+}
+
+.mobile .hugeText {
+  font: 2em "Georgia";
+}
+.mobile .largeText {
+  font: 1.5em "Georgia";
+}
+.mobile * {
+  font: 1em "Georgia";
 }
 
 /* General properties */

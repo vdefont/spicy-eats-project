@@ -59,7 +59,7 @@ export default {
           error: 'Username must be at least 4 characters'
         },
         {
-          label: 'Name',
+          label: 'Name (appears on reviews)',
           type: 'text',
           model: 'name',
           validate: (name) => name.length > 2,

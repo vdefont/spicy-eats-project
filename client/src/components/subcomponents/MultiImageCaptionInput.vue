@@ -24,15 +24,17 @@ OUT: $emit('new-data', photos)
     <div id="addImageLabel">
       Add image:
     </div>
-    <image-uploader
-      ref="imageInput"
-      :maxWidth="512"
-      :maxHeight="512"
-      :quality="0.7"
-      :autoRotate=false
-      :preview=false
-      @input="imageUploaded">
-    </image-uploader>
+    <div class="imageInputWrapper">
+      <image-uploader
+        ref="imageInput"
+        :maxWidth="512"
+        :maxHeight="512"
+        :quality="0.7"
+        :autoRotate=false
+        :preview=false
+        @input="imageUploaded">
+      </image-uploader>
+    </div>
   </div>
 </template>
 
@@ -102,7 +104,8 @@ li {
 .caption {
   width: 95%
 }
-#addImageLabel{
-  margin: 2px 0px;
+.imageInputWrapper {
+  display: flex;
+  width: 0px;
 }
 </style>
