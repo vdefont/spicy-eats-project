@@ -1,7 +1,6 @@
 <template lang="html">
 
   <div id="loginWrapper">
-
     <custom-form
       :inputs="loginFormInputs"
       :error="errors.login"
@@ -34,6 +33,7 @@ export default {
   },
   data () {
     return {
+      lastRoute: '/',
       loginFormInputs: [
         {
           label: 'Username',
@@ -132,9 +132,19 @@ export default {
         this.errors[whichButton] = error
       } else {
         this.$store.commit('username', username)
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: this.lastRoute })
       }
     }
+  },
+  // Store the last URL
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.lastRoute = from.path
+      next()
+    })
+  },
+  mounted () {
+    console.log('hello')
   }
 }
 </script>

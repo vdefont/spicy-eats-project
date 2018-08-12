@@ -1,5 +1,6 @@
 <template>
   <div :class="mobileClass" id="app">
+    {{ this.$store.lastRoute }}
     <header>
       <a :href="$store.state.city.id ? '/#/city/' + $store.state.city.id : '/#/'">
         <div class="hugeText">

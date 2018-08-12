@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     city: {
       id: '',
       name: ''
-    }
+    },
+    lastRoute: null // Useful for login page to redirect
   },
   mutations: {
     username: function (state, username) {

@@ -4,9 +4,23 @@
 
 <script>
 export default {
-  mounted () {
-    this.$store.commit('username', null)
-    this.$router.push({ path: '/' })
+  data () {
+    return {
+      lastRoute: null
+    }
+  },
+  // Store the last URL
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.lastRoute = from.path
+      next()
+    })
+  },
+  watch: {
+    lastRoute: function (lastRoute) {
+      this.$store.commit('username', null)
+      this.$router.push({ path: this.lastRoute })
+    }
   }
 }
 </script>
