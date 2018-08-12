@@ -1,0 +1,102 @@
+<template>
+  <div id="app">
+    <header>
+      <a :href="$store.state.city.id ? '/#/city/' + $store.state.city.id : '/#/'">
+        <div class="hugeText">
+          Spicy Eats {{ $store.state.city.name ? ` ${$store.state.city.name}` : '' }}
+        </div>
+      </a>
+      <div id="navbar">
+        <!-- Login/logout button -->
+        <custom-button href="/#/">Home</custom-button>
+        <custom-button v-if="!$store.state.username" href="/#/login">Login</custom-button>
+        <custom-button v-else href="/#/logout">Logout</custom-button>
+      </div>
+    </header>
+
+    <!-- Specific page content goes here -->
+    <section>
+      <router-view></router-view>
+    </section>
+  </div>
+</template>
+
+<script type="text/javascript">
+import CustomButton from '@/components/subcomponents/CustomButton'
+
+export default {
+  components: {
+    CustomButton
+  }
+}
+</script>
+
+<!-- Style for whole project -->
+<style>
+
+/* For this page */
+
+#navbar {
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#navbar > * {
+  margin: 0px 10px;
+}
+
+/* For all elements  */
+
+#app {
+  max-width: 800px;
+  margin: 0px auto;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  color: black;
+  font: 1em "Georgia";
+}
+
+html {
+  width: 100%;
+  height:100%;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 10px;
+}
+
+/* List styles */
+ul, li {
+  list-style-type: none;
+}
+.verticalList {
+  display:flex;
+  flex-flow: column nowrap;
+}
+.verticalList > li {
+  padding: 10px 0px;
+}
+
+/* Text styles  */
+.hugeText {
+  font: 4em "Georgia";
+}
+.largeText {
+  font: 2em "Georgia";
+}
+
+/* General properties */
+.red {
+  color:#720300;
+}
+
+</style>
