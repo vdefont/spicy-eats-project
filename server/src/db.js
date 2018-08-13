@@ -9,11 +9,7 @@ const connectionParams = {
   database: config.db.database
 }
 
-try {
-  const connection = mysql.createConnection(connectionParams)
-} catch (e) {
-  const connection = new maria(connectionParams)
-}
+const connection = new maria(connectionParams)
 
 function query(query, customError = "") {
   return new Promise(function(resolve, reject) {
