@@ -19,6 +19,14 @@ function query(query, customError = "") {
   })
 }
 
+query('SELECT * FROM cities')
+.then((output) => {
+  console.log(output)
+})
+.catch((err) => {
+  console.log(err)
+})
+
 module.exports = {
   query: query
 }
