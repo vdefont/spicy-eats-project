@@ -1,6 +1,7 @@
 const mysql = require('mysql2')
+const maria = require('mariasql');
 const config = require('./config')
-const connection = mysql.createConnection({
+const connection = new maria({
   host: config.db.host,
   user: config.db.user,
   database: config.db.database
