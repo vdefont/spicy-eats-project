@@ -1,6 +1,7 @@
 // SET UP MODEL
 
 const dataTypes = {
+  shortString: 0,
   string: 1,
   longString: 2,
   int: 3,
@@ -9,6 +10,7 @@ const dataTypes = {
   image: 6
 }
 const sqlTypes = {}
+sqlTypes[dataTypes.shortString] = "varchar(50)"
 sqlTypes[dataTypes.string] = "varchar(255)"
 sqlTypes[dataTypes.longString] = "text"
 sqlTypes[dataTypes.int] = "int"
@@ -47,7 +49,7 @@ function addTables() {
 
   model.cuisines = {
     fields: {
-      name: dataTypes.string
+      name: dataTypes.shortString
     },
     primaryKey: "name"
   }
@@ -55,7 +57,7 @@ function addTables() {
   model.restaurants_x_cuisines = {
     fields: {
       restaurantsId: dataTypes.int,
-      cuisinesName: dataTypes.string
+      cuisinesName: dataTypes.shortString
     },
     unique: ["restaurantsId", "cuisinesName"]
   }
@@ -81,7 +83,7 @@ function addTables() {
 
   model.users = {
     fields: {
-      username: dataTypes.string,
+      username: dataTypes.shortString,
       salt: dataTypes.string,
       password: dataTypes.string,
       name: dataTypes.string,
