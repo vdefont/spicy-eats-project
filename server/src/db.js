@@ -1,9 +1,9 @@
 const mysql = require('mysql2')
-const maria = require('mariasql');
 const config = require('./config')
-const connection = new maria({
+const connection = mysql.createConnection({
   host: config.db.host,
   user: config.db.user,
+  password: config.db.password,
   database: config.db.database
 })
 
@@ -18,14 +18,6 @@ function query(query, customError = "") {
     })
   })
 }
-
-query('SELECT * FROM cities')
-.then((output) => {
-  console.log(output)
-})
-.catch((err) => {
-  console.log(err)
-})
 
 module.exports = {
   query: query
