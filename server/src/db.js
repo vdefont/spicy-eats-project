@@ -1,19 +1,15 @@
 const mysql = require('mysql2')
-const maria = require('mariasql');
 const config = require('./config')
-
-const connectionParams = {
+const connection = mysql.createConnection({
   host: config.db.host,
   user: config.db.user,
   password: config.db.password,
   database: config.db.database
-}
-
-const connection = new maria(connectionParams)
+})
 
 function query(query, customError = "") {
   return new Promise(function(resolve, reject) {
-    connection.query(query, function(err, results) {
+    connection.query(query, function(err, results, fields) {
       if (err) {
         if (customError != "") err = customError
         results = {error: err}

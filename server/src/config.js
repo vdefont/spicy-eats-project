@@ -4,7 +4,6 @@ module.exports = {
     host: 'localhost',
     user: 'root',
     password: 'shamW0W!',
-    database: 'spicyEats',
-    dialect: 'mysql'
+    database: 'spicyEats'
   }
 }
