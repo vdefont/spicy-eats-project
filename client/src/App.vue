@@ -2,14 +2,20 @@
   <div :class="mobileClass" id="app">
     {{ this.$store.lastRoute }}
     <header>
-      <a :href="$store.state.city.id ? '/#/city/' + $store.state.city.id : '/#/'">
+      <a href="/#/">
         <div class="hugeText">
-          Spicy Eats {{ $store.state.city.name ? ` ${$store.state.city.name}` : '' }}
+          Burning Hot Food
         </div>
       </a>
       <div id="navbar">
         <!-- Login/logout button -->
         <custom-button href="/#/">Home</custom-button>
+        <custom-button
+          v-if="$store.state.city.id"
+          :href="`/#/city/${$store.state.city.id}`"
+          >
+          {{ $store.state.city.name }}
+        </custom-button>
         <custom-button v-if="!$store.state.username" href="/#/login">Login</custom-button>
         <custom-button v-else href="/#/logout">Logout</custom-button>
       </div>
