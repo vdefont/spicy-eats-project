@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const API = axios.create({
-  baseURL: 'http://18.222.253.201:8081'
+  baseURL: 'http://172.31.32.52:8081'
 })
 
 export default (query, data = {}) => {
