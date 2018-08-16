@@ -179,4 +179,4 @@ app.post('/addCuisineToRestaurant', async function (req, res) {
   res.send({})
 })
 
-app.listen(config.port, 'localhost')
+app.listen(config.port)
