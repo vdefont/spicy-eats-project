@@ -1,10 +1,7 @@
 const axios = require('axios')
 
 const API = axios.create({
-  baseURL: 'http://api.burninghotfood.com',
-  headers: {
-    'X-Requested-With' : 'XMLHttpRequest'
-  }
+  baseURL: 'http://api.burninghotfood.com'
 })
 
 export default (query, data = {}) => {
