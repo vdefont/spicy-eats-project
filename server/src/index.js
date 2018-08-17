@@ -21,7 +21,7 @@ function verifyRequestOrigin(req, res, next) {
     headers.referer && headers.referer.indexOf("burninghotfood") >= 0
   )
   if (properRequest) next()
-  else res.send(`{ 'error': 'Malicious Request!' }`)
+  else res.send("Error: malicious request! Go home hacker!")
 }
 app.use(verifyRequestOrigin)
 
