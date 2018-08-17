@@ -15,8 +15,7 @@ app.use(morgan('combined'))
 
 // Ex: /standardQuery/users/getAll
 app.post('/standardQuery/:table/:operation', async function (req, res) {
-  for (name in req) console.log(name)
-  console.log(req)
+  console.log(req.headers)
 
   // Make query
   var table = req.params.table
