@@ -7,7 +7,6 @@ upstream backend {
 }
 
 server {
-  listen 80;
   server_name burninghotfood.com;
 
   location / {
@@ -20,10 +19,16 @@ server {
     proxy_buffering    off;
     proxy_pass         http://webpack;
   }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/burninghotfood.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/burninghotfood.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
 }
 
 server {
-  listen 80;
   server_name api.burninghotfood.com;
 
   location / {
@@ -37,4 +42,38 @@ server {
     proxy_redirect     off;
     proxy_pass         http://backend;
   }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/burninghotfood.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/burninghotfood.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    if ($host = burninghotfood.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80;
+  server_name burninghotfood.com;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = api.burninghotfood.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80;
+  server_name api.burninghotfood.com;
+    return 404; # managed by Certbot
+
+
 }
