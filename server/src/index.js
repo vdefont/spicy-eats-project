@@ -13,6 +13,18 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('combined'))
 
+// Make sure that requests are coming from website, not from tool like postman
+function verifyRequestOrigin(req, res, next) {
+  var headers = req.headers
+  var properRequest = (
+    headers.origin && headers.origin.indexOf("burninghotfood") >= 0 &&
+    headers.referer && headers.referer.indexOf("burninghotfood") >= 0
+  )
+  if (properRequest) next()
+  else res.send(`{ 'error': 'Malicious Request!' }`)
+}
+app.use(verifyRequestOrigin)
+
 // Ex: /standardQuery/users/getAll
 app.post('/standardQuery/:table/:operation', async function (req, res) {
   console.log(req.headers)
