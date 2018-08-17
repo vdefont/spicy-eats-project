@@ -189,6 +189,7 @@ function makeStandardQuery(table, operation, reqBody) {
     vals = ["NOW()","NOW()"]
     for (key in reqBody) {
       if (key in curFields) {
+        console.log(key)
         val = reqBody[key]
         keys.push(key)
         // If it is a string, add quotes around it
@@ -234,7 +235,6 @@ function makeStandardQuery(table, operation, reqBody) {
     query = `DELETE FROM ${table} WHERE ${primaryKey} = ${primaryVal}`
   }
 
-  console.log(query)
   return(query)
 }
 
