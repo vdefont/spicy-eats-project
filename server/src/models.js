@@ -17,7 +17,12 @@ sqlTypes[dataTypes.int] = "int"
 sqlTypes[dataTypes.smallDouble] = "double(2,1)"
 sqlTypes[dataTypes.image] = "varchar(50000)"
 sqlTypes[dataTypes.boolean] = "bit"
-const quoteTypes = [dataTypes.string, dataTypes.longString, dataTypes.image]
+const quoteTypes = [
+  dataTypes.shortString,
+  dataTypes.string,
+  dataTypes.longString,
+  dataTypes.image
+]
 
 var model = {}  // Will contain all the tables
 
@@ -189,7 +194,6 @@ function makeStandardQuery(table, operation, reqBody) {
     vals = ["NOW()","NOW()"]
     for (key in reqBody) {
       if (key in curFields) {
-        console.log(key)
         val = reqBody[key]
         keys.push(key)
         // If it is a string, add quotes around it
