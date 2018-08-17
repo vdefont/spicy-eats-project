@@ -142,9 +142,6 @@ export default {
       vm.lastRoute = from.path
       next()
     })
-  },
-  mounted () {
-    console.log('hello')
   }
 }
 </script>

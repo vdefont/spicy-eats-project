@@ -27,7 +27,6 @@ app.use(verifyRequestOrigin)
 
 // Ex: /standardQuery/users/getAll
 app.post('/standardQuery/:table/:operation', async function (req, res) {
-  console.log(req.headers)
 
   // Make query
   var table = req.params.table
@@ -119,7 +118,6 @@ app.post('/reviews/:operation', async function (req, res) {
 
   // Update spiciness, overallQuality, reviews
   query = `UPDATE restaurants SET spiciness = ${spiciness}, overallQuality = ${overallQuality}, reviews = ${reviews} WHERE id = ${restaurantsId}`
-  console.log(query)
   await db.query(query)
 
   res.send({
