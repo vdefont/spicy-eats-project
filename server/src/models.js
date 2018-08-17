@@ -234,6 +234,7 @@ function makeStandardQuery(table, operation, reqBody) {
     query = `DELETE FROM ${table} WHERE ${primaryKey} = ${primaryVal}`
   }
 
+  console.log(query)
   return(query)
 }
 
