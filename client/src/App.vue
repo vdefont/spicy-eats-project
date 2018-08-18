@@ -6,6 +6,9 @@
         <div class="hugeText">
           Burning Hot Food
         </div>
+        <div>
+          Discover & Rate Insanely Spicy Restaurants
+        </div>
       </a>
       <div id="navbar">
         <!-- Login/logout button -->
