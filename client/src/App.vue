@@ -7,7 +7,7 @@
           Burning Hot Food
         </div>
         <div>
-          Discover & Rate Insanely Spicy Restaurants
+          Discover & Rate the Spiciest Restaurants
         </div>
       </a>
       <div id="navbar">
