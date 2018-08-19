@@ -7,7 +7,7 @@
         <li class="largeText red">{{ user.name }}</li>
         <li>
           <img v-if="user.photo" :src="user.photo">
-          <img v-else src="/static/jalapenos.png">
+          <img v-else src="/static/logo.png">
         </li>
         <li>
           Reviews: {{ user.reviews }}

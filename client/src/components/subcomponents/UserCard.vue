@@ -6,7 +6,7 @@
     >
     <div>
       <img v-if="user.photo" :src="user.photo">
-      <img v-else src="/static/jalapenos.png">
+      <img v-else src="/static/logo.png">
       <p v-if="user.photo">photo</p>
       <p v-else>No photo</p>
     </div>
