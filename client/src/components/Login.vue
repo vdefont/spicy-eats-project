@@ -124,7 +124,7 @@ export default {
         res = (await api('/validateUser', user)).data
         name = res.name
       } else if (whichButton === 'createAccount') {
-        user.reviews = 0  // Start user off with 0 reviews
+        user.reviews = 0 // Start user off with 0 reviews
         res = (await api('/createUser', user)).data
       }
 
