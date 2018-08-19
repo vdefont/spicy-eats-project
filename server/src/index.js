@@ -25,6 +25,21 @@ function verifyRequestOrigin(req, res, next) {
 }
 app.use(verifyRequestOrigin)
 
+// Replace all single-quotes with double-single quotes: ' -> ''
+// Useful for SQL
+function replaceSingleQuotes(req, res, next) {
+  var body = req.body
+  var newBody = {}
+  for (var key in body) {
+    var val = body[key]
+    var newVal = val.replace(/'/g, "''")
+    newBody[key] = newVal
+  }
+  req.body = newBody
+  next()
+}
+app.use(replaceSingleQuotes)
+
 // Ex: /standardQuery/users/getAll
 app.post('/standardQuery/:table/:operation', async function (req, res) {
 
