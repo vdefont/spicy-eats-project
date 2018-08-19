@@ -1,30 +1,30 @@
 <template lang="html">
 
-  <div class="restaurantWrapper">
-    <div class="centeredContent">
+  <centered-content-wrapper>
 
-      <restaurant-list-item :data="restaurant">
-      </restaurant-list-item>
+    <restaurant-list-item :data="restaurant">
+    </restaurant-list-item>
 
-      <restaurant-editor
-        v-if="$store.state.username && editingRestaurant"
-        @field-updated="restaurantFieldUpdated"
-        >
-      </restaurant-editor>
+    <field-editor
+      v-if="$store.state.username && editingRestaurant"
+      :inputFields="restaurantEditorInputs"
+      @field-updated="restaurantFieldUpdated"
+      >
+    </field-editor>
 
-      <custom-button
-        v-if="$store.state.username"
-        @custom-button-click="() => editingRestaurant = !editingRestaurant"
-        >
-        {{ editingRestaurant ? "Done Editing" : "Edit Restaurant Info" }}
-      </custom-button>
-      <custom-button
-        v-else
-        href="/#/login">
-        Log in to Edit Restaurant
-      </custom-button>
+    <custom-button
+      v-if="$store.state.username"
+      @custom-button-click="() => editingRestaurant = !editingRestaurant"
+      >
+      {{ editingRestaurant ? "Done Editing" : "Edit Restaurant Info" }}
+    </custom-button>
+    <custom-button
+      v-else
+      href="/#/login">
+      Log in to Edit Restaurant
+    </custom-button>
 
-      <div class="reviewsSection">
+    <div class="reviewsSection">
 
         <div class="largeText red">
           Reviews:
@@ -56,40 +56,39 @@
             class="newReview"
             v-if="writingReview"
             >
-            <custom-form
-              :inputs="newReviewFormInputs"
-              @custom-form-submit="newReviewButtonClicked($event)"
+            <review-form
               :inputData="previousReview ? previousReview : {}"
-              :noclear="true"
+              :isExistingReview="previousReview ? true : false"
+              @review-form-submit="newReviewButtonClicked($event)"
               >
-              {{ previousReview ? 'Edit Review' : 'Add New Review' }}
-            </custom-form>
+            </review-form>
           </li>
 
         </ul>
 
       </div>
 
-    </div>
-  </div>
+  </centered-content-wrapper>
 
 </template>
 
 <script>
 import api from '@/api'
-import RestaurantListItem from './subcomponents/RestaurantListItem'
-import ReviewListItem from './subcomponents/ReviewListItem'
-import CustomForm from './subcomponents/CustomForm'
-import CustomButton from './subcomponents/CustomButton'
-import RestaurantEditor from './subcomponents/RestaurantEditor'
+import RestaurantListItem from '@/components/subcomponents/RestaurantListItem'
+import ReviewListItem from '@/components/subcomponents/ReviewListItem'
+import ReviewForm from '@/components/subcomponents/form/ReviewForm'
+import CustomButton from '@/components/subcomponents/CustomButton'
+import FieldEditor from '@/components/subcomponents/form/FieldEditor'
+import CenteredContentWrapper from '@/components/subcomponents/CenteredContentWrapper'
 
 export default {
   components: {
     RestaurantListItem,
     ReviewListItem,
-    CustomForm,
+    ReviewForm,
     CustomButton,
-    RestaurantEditor
+    FieldEditor,
+    CenteredContentWrapper
   },
   data () {
     return {
@@ -98,41 +97,50 @@ export default {
       reviews: [], // list of review data objects
       previousReview: null, // User's past review (default is null)
       writingReview: false,
-      newReviewFormInputs: [
-        {
-          label: 'Spiciness (1-5)',
-          type: 'number',
-          model: 'spiciness',
-          validate: (spiciness) => /^[1-5]$/.test(spiciness),
-          error: 'Enter whole number between 1 and 5'
-        },
-        {
-          label: 'Overall Quality (1-5)',
-          type: 'number',
-          model: 'overallQuality',
-          validate: (overallQuality) => /^[1-5]$/.test(overallQuality),
-          error: 'Enter whole number between 1 and 5'
-        },
-        {
-          label: 'Dishes Eaten',
+      restaurantEditorInputs: {
+        name: {
           type: 'text',
-          model: 'dishesEaten',
-          validate: (dishesEaten) => dishesEaten.length > 4,
-          error: 'Enter valid dishes'
+          prompt: 'New Name',
+          buttonText: 'Update Name',
+          validate: (val) => val.length > 2,
+          error: 'Enter Valid Name'
         },
-        {
-          label: 'Description',
-          type: 'textarea',
-          model: 'description',
-          validate: (description) => description.length >= 40,
-          error: 'Enter at least 40 characters'
+        address: {
+          type: 'text',
+          prompt: 'New Address',
+          buttonText: 'Update Address',
+          validate: (val) => val.length > 10,
+          error: 'Enter Valid Address'
         },
-        {
-          label: 'Images (optional)',
-          type: 'multi-image-caption',
-          model: 'photos'
+        website: {
+          type: 'text',
+          prompt: 'New Website',
+          buttonText: 'Update Website',
+          validate: (val) => val.length > 5,
+          error: 'Enter Valid Website'
+        },
+        phoneNumber: {
+          type: 'text',
+          prompt: 'New Phone Number',
+          buttonText: 'Update Phone Number',
+          validate: (val) => val.length >= 10,
+          error: 'Enter Valid Phone Number'
+        },
+        acceptsReservations: {
+          type: 'text',
+          prompt: 'Accepts Reservations?',
+          buttonText: 'Update Reservation Policy',
+          validate: (val) => val === 'Yes' || val === 'No',
+          error: 'Enter "Yes" or "No"'
+        },
+        cuisine: {
+          type: 'text',
+          prompt: 'New Cuisine Type',
+          buttonText: 'Add Cuisine',
+          validate: (val) => val.length > 2,
+          error: 'Enter Valid Cuisine'
         }
-      ]
+      }
     }
   },
   methods: {

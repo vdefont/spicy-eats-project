@@ -1,50 +1,49 @@
 <template lang="html">
-  <div>
+  <centered-content-wrapper>
 
-    <section>
-      <ul class="cityList">
-        <li
-          v-for="(city, key) in cities"
-          v-bind:key="key"
-          >
-          <city-card
-            :city="city"
-            @city-card-clicked="updateCity(city)"
-            >
-          </city-card>
-        </li>
-      </ul>
-
-      <custom-form
-        v-if="$store.state.username"
-        :inputs="cityFormInputs"
-        @custom-form-submit="newCityButtonClicked($event)"
+    <ul class="cityList">
+      <li
+        v-for="(city, key) in cities"
+        v-bind:key="key"
         >
-        Add New City
-      </custom-form>
-      <div v-else class="centered">
-        <custom-button href="/#/login">
-          Log in to Add New City
-        </custom-button>
-      </div>
+        <city-card
+          :city="city"
+          @city-card-clicked="updateCity(city)"
+          >
+        </city-card>
+      </li>
+    </ul>
 
-    </section>
+    <custom-form
+      v-if="$store.state.username"
+      :inputs="cityFormInputs"
+      @custom-form-submit="newCityButtonClicked($event)"
+      >
+      Add New City
+    </custom-form>
+    <div v-else class="centered">
+      <custom-button href="/#/login">
+        Log in to Add New City
+      </custom-button>
+    </div>
 
-  </div>
+  </centered-content-wrapper>
 </template>
 
 <script>
 import api from '@/api'
-import CityCard from './subcomponents/CityCard'
-import CustomForm from './subcomponents/CustomForm'
-import CustomButton from './subcomponents/CustomButton'
+import CityCard from '@/components/subcomponents/CityCard'
+import CustomForm from '@/components/subcomponents/form/CustomForm'
+import CustomButton from '@/components/subcomponents/CustomButton'
+import CenteredContentWrapper from '@/components/subcomponents/CenteredContentWrapper'
 
 export default {
   name: 'Home',
   components: {
     CityCard,
     CustomForm,
-    CustomButton
+    CustomButton,
+    CenteredContentWrapper
   },
   data () {
     return {

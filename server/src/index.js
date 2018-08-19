@@ -108,7 +108,7 @@ app.post('/reviews/:operation', async function (req, res) {
   var insertId = result.insertId
 
   // Recalculate spiciness, overallQuality, reviews
-  var restaurantsId = req.body.restaurantsId;
+  var restaurantsId = req.body.restaurantsId
   query = `SELECT AVG(spiciness) AS spiciness, AVG(overallQuality) AS overallQuality, COUNT(id) AS reviews FROM reviews WHERE restaurantsId = ${restaurantsId}`
   result = (await db.query(query))[0]
   var round = (val) => Math.round(val * 10) / 10 // Round to 1 decimal place
@@ -118,6 +118,16 @@ app.post('/reviews/:operation', async function (req, res) {
 
   // Update spiciness, overallQuality, reviews
   query = `UPDATE restaurants SET spiciness = ${spiciness}, overallQuality = ${overallQuality}, reviews = ${reviews} WHERE id = ${restaurantsId}`
+  await db.query(query)
+
+  // Recalculate num of user reviews
+  var usersId = req.body.usersId
+  query = `SELECT COUNT(id) AS reviews FROM reviews WHERE usersId = '${usersId}'`
+  result = (await db.query(query))[0]
+  reviews = result.reviews
+
+  // Upfsyr udrt trbired
+  query = `UPDATE users SET reviews = ${reviews} WHERE username = '${usersId}'`
   await db.query(query)
 
   res.send({
@@ -132,6 +142,7 @@ app.post('/getReviews', async function (req, res) {
   var reviewsIncomplete = await db.query(getReviewsQuery)
 
   // Add "user" and "photos" fields
+  // Add "restaurant" field if restaurantId is null (use case: "my account" page)
   var reviewsComplete = []
   for (var i in reviewsIncomplete) {
     var review = reviewsIncomplete[i]
@@ -139,12 +150,19 @@ app.post('/getReviews', async function (req, res) {
     // Add user - but only name field
     var userQuery = models.makeStandardQuery('users', 'find', {usename: review.usersId})
     var user = (await db.query(userQuery))[0]
-    review.user = {name: user.name}
+    review.user = user
 
     // Add photos
     var photosQuery = models.makeStandardQuery('photos', 'find', {reviewsId: review.id})
     var photos = await db.query(photosQuery)
     review.photos = photos
+
+    // Add restaurant if not already in query
+    if (!req.body.restaurantId) {
+      var restaurantQuery = models.makeStandardQuery('restaurants', 'find', {id: review.restaurantsId})
+      var restaurant = (await db.query(restaurantQuery))[0]
+      review.restaurant = restaurant
+    }
 
     // Save review
     reviewsComplete.push(review)

@@ -5,6 +5,7 @@ import City from '@/components/City'
 import Restaurant from '@/components/Restaurant'
 import Login from '@/components/Login'
 import Logout from '@/components/Logout'
+import User from '@/components/User'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
       path: '/logout',
       name: 'Logout',
       component: Logout
+    },
+    {
+      path: '/user/:username',
+      name: 'User',
+      component: User
     },
     {
       path: '/test',

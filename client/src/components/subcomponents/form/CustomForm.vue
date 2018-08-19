@@ -54,8 +54,8 @@ OUTPUT: $emit('custom-form-submit', formData)
 </template>
 
 <script>
-import CustomButton from './CustomButton'
-import MultiImageCaptionInput from './MultiImageCaptionInput'
+import CustomButton from '@/components/subcomponents/CustomButton'
+import MultiImageCaptionInput from '@/components/subcomponents/form/MultiImageCaptionInput'
 
 export default {
   name: 'custom-form',

@@ -1,47 +1,45 @@
 <template lang="html">
-  <div id="cityWrapper">
+  <centered-content-wrapper>
+    <ul id="restaurantList" class="verticalList">
+      <restaurant-list-item
+        v-for="(restaurant, key) in restaurants"
+        :key="key"
+        :data="restaurant"
+        >
+      </restaurant-list-item>
 
-    <section>
-      <ul id="restaurantList" class="verticalList">
-        <restaurant-list-item
-          v-for="(restaurant, key) in restaurants"
-          :key="key"
-          :data="restaurant"
+      <!-- Add new restaurant -->
+      <li v-if="$store.state.username">
+        <custom-form
+          :inputs="newRestaurantFormInputs"
+          @custom-form-submit="newRestaurantButtonClicked"
           >
-        </restaurant-list-item>
-
-        <!-- Add new restaurant -->
-        <li v-if="$store.state.username">
-          <custom-form
-            :inputs="newRestaurantFormInputs"
-            @custom-form-submit="newRestaurantButtonClicked"
-            >
-            Add New Restaurant
-          </custom-form>
-        </li>
-        <li v-else>
-          <custom-button href="/#/login">
-            Log in to Add New Restaurant
-          </custom-button>
-        </li>
-      </ul>
-    </section>
-
-  </div>
+          Add New Restaurant
+        </custom-form>
+      </li>
+      <li v-else>
+        <custom-button href="/#/login">
+          Log in to Add New Restaurant
+        </custom-button>
+      </li>
+    </ul>
+  </centered-content-wrapper>
 </template>
 
 <script>
 import api from '@/api'
-import CustomForm from './subcomponents/CustomForm'
-import RestaurantListItem from './subcomponents/RestaurantListItem'
-import CustomButton from './subcomponents/CustomButton'
+import CustomForm from '@/components/subcomponents/form/CustomForm'
+import RestaurantListItem from '@/components/subcomponents/RestaurantListItem'
+import CustomButton from '@/components/subcomponents/CustomButton'
+import CenteredContentWrapper from '@/components/subcomponents/CenteredContentWrapper'
 
 export default {
   name: 'City',
   components: {
     CustomForm,
     RestaurantListItem,
-    CustomButton
+    CustomButton,
+    CenteredContentWrapper
   },
   data () {
     return {

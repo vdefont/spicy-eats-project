@@ -24,29 +24,21 @@ OUT: $emit('new-data', photos)
     <div id="addImageLabel">
       Add image:
     </div>
-    <div class="imageInputWrapper">
-      <image-uploader
-        ref="imageInput"
-        :maxWidth="512"
-        :maxHeight="512"
-        :quality="0.7"
-        :autoRotate=false
-        :preview=false
-        @input="imageUploaded">
-      </image-uploader>
-    </div>
+    <image-upload
+      @image-uploaded="imageUploaded">
+    </image-upload>
   </div>
 </template>
 
 <script>
-import CustomButton from './CustomButton'
-import { ImageUploader } from 'vue-image-upload-resize'
+import CustomButton from '@/components/subcomponents/CustomButton'
+import ImageUpload from '@/components/subcomponents/form/ImageUpload'
 
 export default {
   name: 'multi-image-caption-input',
   components: {
     CustomButton,
-    ImageUploader
+    ImageUpload
   },
   props: {
     inputPhotos: Array
@@ -69,9 +61,6 @@ export default {
       newPhoto.photo = photo
       newPhoto.caption = ''
       this.photos.push(newPhoto)
-
-      // Clear new photo input - hacky way of doing it
-      this.$refs.imageInput.$el.children[1].value = ''
 
       // Send event that data was changed
       this.emitEvent()
@@ -98,9 +87,5 @@ li {
 }
 .caption {
   width: 95%
-}
-.imageInputWrapper {
-  display: flex;
-  width: 0px;
 }
 </style>

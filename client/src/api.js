@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const API = axios.create({
-  baseURL: 'https://api.burninghotfood.com'
+  baseURL: 'http://127.0.0.1:8081/'
 })
 
 export default (query, data = {}) => {

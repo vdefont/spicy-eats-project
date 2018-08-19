@@ -25,7 +25,7 @@
 
 <script>
 import api from '@/api'
-import CustomForm from './subcomponents/CustomForm'
+import CustomForm from '@/components/subcomponents/form/CustomForm'
 
 export default {
   components: {

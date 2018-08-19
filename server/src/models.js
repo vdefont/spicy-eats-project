@@ -92,7 +92,13 @@ function addTables() {
       salt: dataTypes.string,
       password: dataTypes.string,
       name: dataTypes.string,
-      email: dataTypes.string
+      email: dataTypes.string,
+      photo: dataTypes.image,
+      location: dataTypes.string,
+      age: dataTypes.int,
+      favoriteCuisines: dataTypes.string,
+      about: dataTypes.longString,
+      reviews: dataTypes.int
     },
     primaryKey: "username"
   }

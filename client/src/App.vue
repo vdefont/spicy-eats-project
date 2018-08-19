@@ -11,7 +11,6 @@
         </div>
       </a>
       <div id="navbar">
-        <!-- Login/logout button -->
         <custom-button href="/#/">Home</custom-button>
         <custom-button
           v-if="$store.state.city.id"
@@ -19,6 +18,14 @@
           >
           {{ $store.state.city.name }}
         </custom-button>
+        <!-- My account button  -->
+        <custom-button
+          v-if="$store.state.username"
+          :href="`/#/user/${$store.state.username}`"
+          >
+          My Account
+        </custom-button>
+        <!-- Login/logout button -->
         <custom-button v-if="!$store.state.username" href="/#/login">Login</custom-button>
         <custom-button v-else href="/#/logout">Logout</custom-button>
       </div>
@@ -68,8 +75,12 @@ export default {
   flex-flow: row nowrap;
 }
 
-#navbar > * {
+.desktop #navbar > * {
   margin: 0px 10px;
+}
+
+.mobile #navbar > * {
+  margin: 0px 5px;
 }
 
 /* For all elements  */

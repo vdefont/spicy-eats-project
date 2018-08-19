@@ -1,7 +1,11 @@
 <template lang="html">
   <li class="reviewListItem">
     <ul>
-      <li>{{ review.user.name }}, {{ formatDate(review.createdAt) }}</li>
+      <li v-if="!noUserInfo">
+        <user-card :user="review.user">
+        </user-card>
+      </li>
+      <li>{{ formatDate(review.createdAt) }}</li>
       <li>Spiciness: {{ review.spiciness }}/5</li>
       <li>Overall Quality: {{ review.overallQuality }}/5</li>
       <li>Dishes eaten: {{ review.dishesEaten }}</li>
@@ -15,15 +19,18 @@
 </template>
 
 <script>
-import PhotosDisplay from './PhotosDisplay'
+import PhotosDisplay from '@/components/subcomponents/PhotosDisplay'
+import UserCard from '@/components/subcomponents/UserCard'
 
 export default {
   name: 'review-list-item',
   components: {
-    PhotosDisplay
+    PhotosDisplay,
+    UserCard
   },
   props: {
-    review: Object
+    review: Object,
+    noUserInfo: Boolean
   },
   methods: {
     // Initially "2018-08-06T16:19:35.000Z"
