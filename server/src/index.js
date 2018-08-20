@@ -32,8 +32,9 @@ function replaceSingleQuotes(req, res, next) {
   var newBody = {}
   for (var key in body) {
     var val = body[key]
-    var newVal = val.replace(/'/g, "''")
-    newBody[key] = newVal
+    // If string, replace single quotes with two single quotes 
+    if (typeof(val) == 'string') val = val.replace(/'/g, "''")
+    newBody[key] = val
   }
   req.body = newBody
   next()
