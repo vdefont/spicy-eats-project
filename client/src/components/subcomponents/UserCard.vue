@@ -7,13 +7,11 @@
     <div>
       <img v-if="user.photo" :src="user.photo">
       <img v-else src="/static/logo.png">
-      <p v-if="user.photo">photo</p>
-      <p v-else>No photo</p>
     </div>
     <ul>
       <li>{{ user.name }}</li>
-      <li>Reviews: {{ user.reviews }}</li>
-      <li v-if="user.location">{{ user.location }}</li>
+      <li>{{ user.reviews + (user.reviews == 1 ? ' review' : ' reviews') }}</li>
+      <li v-if="user.location">Location: {{ user.location }}</li>
       <li v-if="user.age">Age: {{ user.age }}</li>
     </ul>
   </a>
