@@ -23,7 +23,7 @@ function verifyRequestOrigin(req, res, next) {
   if (properRequest) next()
   else res.send("Error: malicious request! Go home hacker!")
 }
-app.use(verifyRequestOrigin)
+//app.use(verifyRequestOrigin)
 
 // Replace all single-quotes with double-single quotes: ' -> ''
 // Useful for SQL
@@ -32,7 +32,7 @@ function replaceSingleQuotes(req, res, next) {
   var newBody = {}
   for (var key in body) {
     var val = body[key]
-    // If string, replace single quotes with two single quotes 
+    // If string, replace single quotes with two single quotes
     if (typeof(val) == 'string') val = val.replace(/'/g, "''")
     newBody[key] = val
   }
@@ -164,7 +164,7 @@ app.post('/getReviews', async function (req, res) {
     var review = reviewsIncomplete[i]
 
     // Add user - but only name field
-    var userQuery = models.makeStandardQuery('users', 'find', {usename: review.usersId})
+    var userQuery = models.makeStandardQuery('users', 'find', {username: review.usersId})
     var user = (await db.query(userQuery))[0]
     review.user = user
 
