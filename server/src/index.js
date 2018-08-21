@@ -23,7 +23,7 @@ function verifyRequestOrigin(req, res, next) {
   if (properRequest) next()
   else res.send("Error: malicious request! Go home hacker!")
 }
-//app.use(verifyRequestOrigin)
+if (!config.dev) app.use(verifyRequestOrigin)
 
 // Replace all single-quotes with double-single quotes: ' -> ''
 // Useful for SQL
