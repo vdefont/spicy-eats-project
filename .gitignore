@@ -1,4 +1,4 @@
-/client/node_modules
-/server/node_modules
-/client/src/api.js
-/server/src/config.js
+client/node_modules
+server/node_modules
+client/src/api.js
+server/src/config.js
