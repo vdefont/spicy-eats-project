@@ -18,6 +18,7 @@
           >
           {{ $store.state.city.name }}
         </custom-button>
+        <custom-button href="/#/about">About</custom-button>
         <!-- My account button  -->
         <custom-button
           v-if="$store.state.username"
