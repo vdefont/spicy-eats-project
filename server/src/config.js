@@ -6,5 +6,5 @@ module.exports = {
     password: 'shamW0W!',
     database: 'spicyEats'
   },
-  dev: TRUE
+  dev: 'test'
 }
