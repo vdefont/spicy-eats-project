@@ -152,7 +152,7 @@ export default {
       })).data[0]
 
       // Get reviews
-      var reviews = (await api('/getReviews', {
+      var reviews = (await api('/getPosts/reviews', {
         restaurantsId: restaurantsId
       })).data
       this.reviews = reviews
@@ -170,27 +170,11 @@ export default {
       }
     },
     newReviewButtonClicked: async function (newReview) {
-      // Add new review
+      // Add or update review
       newReview.usersId = this.$store.state.username
       newReview.restaurantsId = this.restaurant.id
       var operation = this.previousReview ? 'update' : 'create'
-      var res = (await api(`/reviews/${operation}`, newReview)).data
-      var reviewsId = (operation === 'create') ? res.insertId : this.previousReview.id
-
-      // Add images
-      var photos = newReview.photos
-      for (var i in photos) {
-        var photo = photos[i]
-        photo.reviewsId = reviewsId
-        if (photo.id) {
-          var updatePhoto = {}
-          updatePhoto.id = photo.id
-          updatePhoto.caption = photo.caption
-          await api('/standardQuery/photos/update', updatePhoto)
-        } else {
-          await api('/standardQuery/photos/create', photo)
-        }
-      }
+      await api(`/reviews/${operation}`, newReview)
 
       // Reload page
       await this.loadPage()

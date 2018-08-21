@@ -125,6 +125,7 @@ export default {
         name = res.name
       } else if (whichButton === 'createAccount') {
         user.reviews = 0
+        user.forumPosts = 0
         res = (await api('/createUser', user)).data
       }
 

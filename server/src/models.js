@@ -81,6 +81,7 @@ function addTables() {
   model.photos = {
     fields: {
       reviewsId: dataTypes.int,
+      forumPostsId: dataTypes.int,
       caption: dataTypes.string,
       photo: dataTypes.image
     }
@@ -98,11 +99,22 @@ function addTables() {
       age: dataTypes.int,
       favoriteCuisines: dataTypes.string,
       about: dataTypes.longString,
-      reviews: dataTypes.int
+      reviews: dataTypes.int,
+      forumPosts: dataTypes.int
     },
     primaryKey: "username"
   }
 
+  model.forumPosts = {
+    fields: {
+      usersId: dataTypes.string,
+      parent: dataTypes.int,
+      title: dataTypes.string,
+      description: dataTypes.string,
+      likes: dataTypes.int,
+      replies: dataTypes.int
+    }
+  }
 }
 
 // Add "id" as primary key for all fields where it was left blank

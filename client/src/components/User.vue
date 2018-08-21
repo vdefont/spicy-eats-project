@@ -175,7 +175,7 @@ export default {
       var queryObject = {
         usersId: username
       }
-      this.reviews = (await api('/getReviews', queryObject)).data
+      this.reviews = (await api('/getPosts/reviews', queryObject)).data
     },
     loadPage: async function () {
       var username = await this.loadUser()

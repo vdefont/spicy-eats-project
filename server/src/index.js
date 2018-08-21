@@ -115,16 +115,86 @@ app.post('/validateUser', async function (req, res) {
 
 })
 
+// reviews or forumPosts
+// - reviews: includes "user" and "photos" fields
+app.post('/getPosts/:table', async function (req, res) {
+  var table = req.params.table // 'reviews' or 'forumPosts'
+
+  // Find all posts (by restaurant, or by parent)
+  var getPostsQuery = models.makeStandardQuery(table, 'find', req.body)
+  var postsIncomplete = await db.query(getPostsQuery)
+
+  // Add "user" and "photos" fields
+  // Add "restaurant" field if restaurantId is null (use case: "my account" page)
+  var postsComplete = []
+  for (var i in postsIncomplete) {
+    var post = postsIncomplete[i]
+
+    // Add user
+    var userQuery = models.makeStandardQuery('users', 'find', {username: post.usersId})
+    var user = (await db.query(userQuery))[0]
+    // Delete protected fields
+    if (user) {
+      delete user.salt
+      delete user.password
+      delete user.email
+    }
+
+    post.user = user
+
+    // Add photos
+    var idObject = {}
+    idObject[`${table}Id`] = post.id
+    var photosQuery = models.makeStandardQuery('photos', 'find', idObject)
+    var photos = await db.query(photosQuery)
+    post.photos = photos
+
+    // For reviews, add restaurant if not already in query
+    if (table === 'review' && !req.body.restaurantId) {
+      var restaurantQuery = models.makeStandardQuery('restaurants', 'find', {id: review.restaurantsId})
+      var restaurant = (await db.query(restaurantQuery))[0]
+      post.restaurant = restaurant
+    }
+
+    // Save post
+    postsComplete.push(post)
+  }
+
+  res.send(postsComplete)
+})
+
+// table: reviews, or forumPosts
+async function addPhotos (table, postId, photos) {
+  for (var i in photos) {
+    var photo = photos[i]
+    photo[`${table}Id`] = postId
+    if (photo.id) {
+      var updatePhoto = {}
+      updatePhoto.id = photo.id
+      updatePhoto.caption = photo.caption
+      var query = models.makeStandardQuery('photos', 'update', updatePhoto)
+    } else {
+      var query = models.makeStandardQuery('photos', 'create', photo)
+    }
+    await db.query(query)
+  }
+}
+
 // Adds review and recalculates average spiciness for restaurant
 // Operation: create or update
 app.post('/reviews/:operation', async function (req, res) {
+  var review = req.body
+
   // Add review
-  var query = models.makeStandardQuery('reviews', req.params.operation, req.body)
+  var query = models.makeStandardQuery('reviews', req.params.operation, review)
   var result = (await db.query(query))
-  var insertId = result.insertId
+
+  // Add photos
+  var reviewsId = review.id ? review.id : result.insertId // get review id
+  await addPhotos('reviews', reviewsId, review.photos)
 
   // Recalculate spiciness, overallQuality, reviews
-  var restaurantsId = req.body.restaurantsId
+  var restaurantsId = review.restaurantsId
   query = `SELECT AVG(spiciness) AS spiciness, AVG(overallQuality) AS overallQuality, COUNT(id) AS reviews FROM reviews WHERE restaurantsId = ${restaurantsId}`
   result = (await db.query(query))[0]
   var round = (val) => Math.round(val * 10) / 10 // Round to 1 decimal place
@@ -137,54 +207,58 @@ app.post('/reviews/:operation', async function (req, res) {
   await db.query(query)
 
   // Recalculate num of user reviews
-  var usersId = req.body.usersId
+  var usersId = review.usersId
   query = `SELECT COUNT(id) AS reviews FROM reviews WHERE usersId = '${usersId}'`
   result = (await db.query(query))[0]
   reviews = result.reviews
 
-  // Upfsyr udrt trbired
+  // Update user's reviews
   query = `UPDATE users SET reviews = ${reviews} WHERE username = '${usersId}'`
   await db.query(query)
 
-  res.send({
-    insertId: insertId
-  })
+  res.send()
 })
 
-// Returns reviews, including "user" and "photos" fields
-app.post('/getReviews', async function (req, res) {
-  // Get all reviews for specified restaurant
-  var getReviewsQuery = models.makeStandardQuery('reviews', 'find', req.body)
-  var reviewsIncomplete = await db.query(getReviewsQuery)
+// Add or update forumPost, recalculate replies for parent (unless parent is 0, which means it's a topic)
+// Operation: create or update
+app.post('/forumPosts/:operation', async function (req, res) {
+  var forumPost = req.body
+  var operation = req.params.operation
 
-  // Add "user" and "photos" fields
-  // Add "restaurant" field if restaurantId is null (use case: "my account" page)
-  var reviewsComplete = []
-  for (var i in reviewsIncomplete) {
-    var review = reviewsIncomplete[i]
+  // create or update post
+  var query = models.makeStandardQuery('forumPosts', operation, forumPost)
+  var result = (await db.query(query))
 
-    // Add user - but only name field
-    var userQuery = models.makeStandardQuery('users', 'find', {username: review.usersId})
-    var user = (await db.query(userQuery))[0]
-    review.user = user
+  // Add photos
+  var forumPostsId = forumPost.id ? forumPost.id : result.insertId // get review id
+  await addPhotos('forumPosts', forumPostsId, forumPost.photos)
 
-    // Add photos
-    var photosQuery = models.makeStandardQuery('photos', 'find', {reviewsId: review.id})
-    var photos = await db.query(photosQuery)
-    review.photos = photos
+  // Update replies count if creating
+  if (operation == 'create') {
 
-    // Add restaurant if not already in query
-    if (!req.body.restaurantId) {
-      var restaurantQuery = models.makeStandardQuery('restaurants', 'find', {id: review.restaurantsId})
-      var restaurant = (await db.query(restaurantQuery))[0]
-      review.restaurant = restaurant
+    // recalculate posts for users
+    var usersId = forumPost.usersId
+    var query = `SELECT count(id) AS posts FROM forumPosts WHERE usersId = '${usersId}'`
+    var result = (await db.query(query))
+    var posts = result[0].posts
+    // update posts for users
+    query = `UPDATE users SET forumPosts = ${posts} WHERE username = '${usersId}'`
+    await db.query(query)
+
+    // recalculate replies for parent
+    var parentId = forumPost.parent
+    var isTopic = parentId == 0
+    if (!isTopic) {
+      query = `SELECT COUNT(id) AS replies FROM forumPosts WHERE parent = '${parentId}'`
+      result = (await db.query(query))
+      var replies = result[0].replies
+      // update replies for parent
+      query = `UPDATE forumPosts SET replies = ${replies} WHERE id = '${parentId}'`
+      await db.query(query)
     }
-
-    // Save review
-    reviewsComplete.push(review)
   }
 
-  res.send(reviewsComplete)
+  res.send()
 })
 
 // Adds cuisine to restaurant
