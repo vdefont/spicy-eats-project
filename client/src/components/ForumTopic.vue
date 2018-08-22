@@ -6,7 +6,7 @@
         :key="key"
         :forumPost="forumPost"
         :depth="postDepth[forumPost.id]"
-        @reply-created="replyCreated"
+        @reply-created="replyCreated($event)"
         >
       </forum-reply-list-item>
     </ul>
@@ -88,7 +88,7 @@ export default {
     replyCreated: async function (data) {
       // If id already exists, we are just updating
       if (data.id) await api('/forumPosts/update', data)
-      else await api('/forumPosts/update', data)
+      else await api('/forumPosts/create', data)
       // Reload page
       await this.loadPage()
     }

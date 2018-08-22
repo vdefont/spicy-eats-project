@@ -61,7 +61,7 @@ export default {
     newTopic: async function (data) {
       this.creatingTopic = false
 
-      data.usersId = this.$state.store.username
+      data.usersId = this.$store.state.username
       data.parent = 0
       data.replies = 0
       data.likes = 0

@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     formSubmitted: function (data) {
+      console.log('submitted')
       this.$emit('form-submit', data)
     }
   },

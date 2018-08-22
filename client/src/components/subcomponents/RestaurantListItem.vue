@@ -2,23 +2,22 @@
   <li
     class="restaurantListItem"
     >
-    <ul>
-      <li>
-        <a
-          v-bind:href="`/#/restaurant/${data.id}`"
-          class="largeText red"
+    <a :href="`/#/restaurant/${data.id}`">
+      <ul>
+        <li>
+          <p class="largeText red">
+            {{ data.name }}
+          </p>
+        </li>
+        <li
+          v-for="(fieldVal, fieldKey, key) in data"
+          v-if="fieldVal != null && ['id', 'name', 'citiesId', 'createdAt', 'updatedAt'].indexOf(fieldKey) == -1"
+          :key="key"
           >
-          {{ data.name }}
-        </a>
-      </li>
-      <li
-        v-for="(fieldVal, fieldKey, key) in data"
-        v-if="fieldVal != null && ['id', 'name', 'citiesId', 'createdAt', 'updatedAt'].indexOf(fieldKey) == -1"
-        :key="key"
-        >
-        {{ camelCaseToLabel(fieldKey) + ": " + fieldVal }}
-      </li>
-    </ul>
+          {{ camelCaseToLabel(fieldKey) + ": " + fieldVal }}
+        </li>
+      </ul>
+    </a>
   </li>
 </template>
 
