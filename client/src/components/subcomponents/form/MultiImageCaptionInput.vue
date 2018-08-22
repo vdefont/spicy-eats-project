@@ -48,6 +48,14 @@ export default {
       photos: []
     }
   },
+  watch: {
+    inputPhotos: {
+      immediate: true,
+      handler (inputPhotos) {
+        this.photos = inputPhotos
+      }
+    }
+  },
   methods: {
     clearPhotosIfNull: function () {
       if (this.photos == null) this.photos = []
@@ -65,9 +73,6 @@ export default {
       // Send event that data was changed
       this.emitEvent()
     }
-  },
-  mounted () {
-    this.photos = this.inputPhotos
   }
 }
 </script>

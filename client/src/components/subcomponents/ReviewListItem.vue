@@ -31,12 +31,6 @@ export default {
   props: {
     review: Object,
     noUserInfo: Boolean
-  },
-  methods: {
-    // Initially "2018-08-06T16:19:35.000Z"
-    formatDate: function (dateStr) {
-      return dateStr.slice(0, 10)
-    }
   }
 }
 </script>

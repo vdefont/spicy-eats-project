@@ -7,6 +7,8 @@ import Login from '@/components/Login'
 import Logout from '@/components/Logout'
 import User from '@/components/User'
 import About from '@/components/About'
+import Forum from '@/components/Forum'
+import ForumTopic from '@/components/ForumTopic'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -49,8 +51,18 @@ export default new Router({
       component: User
     },
     {
+      path: '/forum',
+      name: 'Forum',
+      component: Forum
+    },
+    {
+      path: '/forumTopic/:root',
+      name: 'ForumTopic',
+      component: ForumTopic
+    },
+    {
       path: '/test',
-      name: 'test',
+      name: 'Test',
       component: Test
     }
   ]

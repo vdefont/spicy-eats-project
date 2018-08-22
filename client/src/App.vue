@@ -18,6 +18,7 @@
           >
           {{ $store.state.city.name }}
         </custom-button>
+        <custom-button href="/#/forum">Forum</custom-button>
         <custom-button href="/#/about">About</custom-button>
         <!-- My account button  -->
         <custom-button
@@ -73,7 +74,7 @@ export default {
 #navbar {
   margin-top: 10px;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
 }
 
 .desktop #navbar > * {

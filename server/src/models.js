@@ -109,6 +109,7 @@ function addTables() {
     fields: {
       usersId: dataTypes.string,
       parent: dataTypes.int,
+      root: dataTypes.int,
       title: dataTypes.string,
       description: dataTypes.string,
       likes: dataTypes.int,

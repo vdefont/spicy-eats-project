@@ -52,6 +52,9 @@ Vue.mixin({
         }
       }
       return label
+    },
+    formatDate: function (dateStr) {
+      return dateStr.slice(0, 10)
     }
   }
 })

@@ -1,6 +1,6 @@
 <!--
 INPUT:
-- inputs: Array, {type, label, model [, validate, error]}
+- inputs: Array, {type, model [,label, validate, error]}
 - [error: String]
 - [noclear: Boolean]
 - [inputData: Object]
@@ -16,7 +16,7 @@ OUTPUT: $emit('custom-form-submit', formData)
 
       <div v-for="(input, key) in inputs" :key="key" class="formInput">
         <label>
-          {{ input.label }}
+          {{ input.label ? input.label : '' }}
 
           <div
             v-if="input.type == 'textarea'"
@@ -86,6 +86,14 @@ export default {
       invalidInputs: {}
     }
   },
+  watch: {
+    inputData: {
+      immediate: true,
+      handler (inputData) {
+        this.formData = inputData
+      }
+    }
+  },
   methods: {
     validateData: function () {
       var invalidInputs = {}
@@ -127,9 +135,6 @@ export default {
         this.$emit('custom-form-submit', formData)
       }
     }
-  },
-  mounted () {
-    this.formData = this.inputData
   }
 }
 </script>

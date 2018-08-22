@@ -15,10 +15,16 @@ export default {
 
 <style lang="css" scoped>
 .outer {
-  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+}
+.desktop .outer {
+  width: 100%;
+}
+.mobile .outer {
+  width: 97%;
+  margin: 0px auto;
 }
 .inner {
   flex-basis: 600px;

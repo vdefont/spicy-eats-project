@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
+  <centered-content-wrapper>
     <p>
-      We recently launched this website out of frustration in finding good restaurants serving authentic spicy meals. The kind that will blow your mind away and strike fire in your mouth!
+      We recently launched this website out of frustration in finding good restaurants serving truly spicy meals. The kind that will blow your mind away and strike fire in your mouth!
     </p>
     <br>
     <p>
@@ -13,17 +13,21 @@
     </p>
     <br>
     <p>
-      Feel free to add new cities, towns, restaurants, reviews as we expand our network of authentic spicy cuisine.
+      Feel free to add new cities, towns, restaurants, reviews as we expand our network of truly spicy cuisine.
     </p>
     <br>
     <p>
       Our goal is to make it easier and faster to locate restaurants that will actually serve satisfying hot and spicy dishes, true to our taste buds!
     </p>
-  </div>
+  </centered-content-wrapper>
 </template>
 
 <script>
+import CenteredContentWrapper from '@/components/subcomponents/CenteredContentWrapper'
 export default {
+  components: {
+    CenteredContentWrapper
+  }
 }
 </script>
 

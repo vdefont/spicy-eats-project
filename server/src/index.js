@@ -228,9 +228,20 @@ app.post('/forumPosts/:operation', async function (req, res) {
   // create or update post
   var query = models.makeStandardQuery('forumPosts', operation, forumPost)
   var result = (await db.query(query))
+  var insertId = result.insertId
+
+  // If creating and parent is 0, set root to own id
+  if (operation === 'create' && forumPost.parent === 0) {
+    query = models.makeStandardQuery('forumPosts', 'update', {
+      id: insertId,
+      root: insertId
+    })
+    console.log(query)
+    await db.query(query)
+  }
 
   // Add photos
-  var forumPostsId = forumPost.id ? forumPost.id : result.insertId // get review id
+  var forumPostsId = forumPost.id ? forumPost.id : insertId // get review id
   await addPhotos('forumPosts', forumPostsId, forumPost.photos)
 
   // Update replies count if creating

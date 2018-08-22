@@ -35,11 +35,11 @@ ul {
   margin-left: 5px;
 }
 .desktop img {
-  max-width:  150px;;
-  max-height: 150px
+  max-width:  75px;;
+  max-height: 75px
 }
 .mobile img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 75px;
+  max-height: 75px;
 }
 </style>
