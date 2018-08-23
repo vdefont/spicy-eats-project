@@ -22,7 +22,7 @@
           Favorite Cuisines: {{ user.favoriteCuisines }}
         </li>
         <li v-if="user.about">
-          About: {{ user.about }}
+          <pre>{{ user.about }}</pre>
         </li>
       </ul>
 

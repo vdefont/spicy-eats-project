@@ -9,7 +9,9 @@
       <li>Spiciness: {{ review.spiciness }}/5</li>
       <li>Overall Quality: {{ review.overallQuality }}/5</li>
       <li>Dishes eaten: {{ review.dishesEaten }}</li>
-      <li class="reviewText">{{ review.description }}</li>
+      <li class="reviewText">
+        <pre>{{ review.description }}</pre>
+      </li>
       <li>
         <photos-display :photos="review.photos">
         </photos-display>

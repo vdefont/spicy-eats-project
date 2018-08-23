@@ -14,7 +14,7 @@ OUT: emit('reply-created', data)
       <p v-if="forumPost.title" class="largeText red">{{ forumPost.title }}</p>
       <user-card :user="forumPost.user">
       </user-card>
-      <p>{{ forumPost.description }}</p>
+      <pre>{{ forumPost.description }}</pre>
       <photos-display :photos="forumPost.photos"></photos-display>
       <p>{{ forumPost.replies + ' ' + (forumPost.replies == 1 ? 'reply' : 'replies')}}</p>
 
