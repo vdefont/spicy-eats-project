@@ -11,8 +11,7 @@ function query(query, customError = "") {
   return new Promise(function(resolve, reject) {
     connection.query(query, function(err, results, fields) {
       if (err) {
-        if (customError != "") err = customError
-        results = {error: err}
+        console.log(err)
       }
       resolve(results)
     })
