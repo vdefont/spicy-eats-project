@@ -150,8 +150,10 @@ app.post('/getPosts/:table', async function (req, res) {
     post.photos = photos
 
     // For reviews, add restaurant if not already in query
-    if (table === 'review' && !req.body.restaurantId) {
-      var restaurantQuery = models.makeStandardQuery('restaurants', 'find', {id: review.restaurantsId})
+    if (table === 'reviews' && !req.body.restaurantId) {
+      var restaurantQuery = models.makeStandardQuery('restaurants', 'find', {
+        id: post.restaurantsId
+      })
       var restaurant = (await db.query(restaurantQuery))[0]
       post.restaurant = restaurant
     }
