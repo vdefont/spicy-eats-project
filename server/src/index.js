@@ -1,5 +1,6 @@
 const cors = require('cors') // Accepts requests from anywhere
 const bodyParser = require('body-parser') // Decode JSON
+const fs = require('fs') // Access file system - for logging
 const morgan = require('morgan') // Logging
 
 const express = require('express')
@@ -11,7 +12,12 @@ const security = require('./security')
 var app = express()
 app.use(cors())
 app.use(bodyParser.json())
-app.use(morgan('combined'))
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream('serverAccess.log', {flags: 'a'})
+
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}))
 
 // Make sure that requests are coming from website, not from tool like postman
 function verifyRequestOrigin(req, res, next) {
@@ -48,7 +54,6 @@ app.post('/standardQuery/:table/:operation', async function (req, res) {
   var table = req.params.table
   var operation = req.params.operation
   var query = models.makeStandardQuery(table, operation, req.body)
-  if (table != "photos") console.log(query)
 
   // Execute query
   var results = await db.query(query)
@@ -238,7 +243,6 @@ app.post('/forumPosts/:operation', async function (req, res) {
       id: insertId,
       root: insertId
     })
-    console.log(query)
     await db.query(query)
   }
 

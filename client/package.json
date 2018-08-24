@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "fs": "0.0.1-security",
     "material-design-icons-iconfont": "^3.0.3",
     "vue": "^2.5.2",
     "vue-image-upload-resize": "^1.1.6",
