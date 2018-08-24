@@ -2,4 +2,4 @@ client/node_modules
 server/node_modules
 client/src/api.js
 server/src/config.js
-server/src/serverAccess.log
+server/serverAccess.log
