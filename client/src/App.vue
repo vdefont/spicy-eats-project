@@ -72,17 +72,17 @@ export default {
 /* For this page */
 
 #navbar {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   flex-flow: row wrap;
 }
 
 .desktop #navbar > * {
-  margin: 0px 10px;
+  margin: 2px 10px;
 }
 
 .mobile #navbar > * {
-  margin: 0px 5px;
+  margin: 2px 5px;
 }
 
 /* For all elements  */

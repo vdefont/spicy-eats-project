@@ -38,7 +38,7 @@ button {
   margin: 10px;
 }
 .mobile button {
-  width: 110px;
+  width: 140px;
   height: 70px;
   margin: 5px;
 }

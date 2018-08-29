@@ -1,23 +1,27 @@
 <template lang="html">
   <centered-content-wrapper>
     <p>
-      We recently launched this website out of frustration in finding good restaurants serving truly spicy meals. The kind that will blow your mind away and strike fire in your mouth!
+      I recently launched this website out of frustration with the difficulty of finding good restaurants serving truly spicy meals. The kind that will blow your mind away and strike fire in your mouth!
     </p>
     <br>
     <p>
-      As a spicy food aficionado, isn’t it frustrating when you ask for a spicy meal, even insist on getting the highest spiciest level, and the waiter just nods and brings you a mildly spicy dish at best?
+      As a spicy food aficionado, isn’t it frustrating when you ask for a spicy meal, even insist on getting the highest level of spiciness, and the waiter just nods and brings you a mildly spicy dish?
     </p>
     <br>
     <p>
-      This site brings us together, the spicy and hot food lovers, where we can share and rate the best restaurants. We deserve to get what we love the best: burning hot food!
+      This site brings together us hot and spicy food lovers, where we can share and rate the best restaurants. We deserve to get what we love the best: burning hot food!
     </p>
     <br>
     <p>
-      Feel free to add new cities, towns, restaurants, reviews as we expand our network of truly spicy cuisine.
+      Feel free to add new cities, towns, restaurants, and reviews as we expand our network of truly spicy cuisine.
     </p>
     <br>
     <p>
       Our goal is to make it easier and faster to locate restaurants that will actually serve satisfying hot and spicy dishes, true to our taste buds!
+    </p>
+    <br>
+    <p>
+      Ideas? Suggestions? Questions? Contact Victor! vdefont at gmail dot com
     </p>
   </centered-content-wrapper>
 </template>

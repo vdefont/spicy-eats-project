@@ -12,7 +12,6 @@
       <li>{{ user.name }}</li>
       <li>{{ user.reviews + (user.reviews == 1 ? ' review' : ' reviews') }}</li>
       <li v-if="user.location">Location: {{ user.location }}</li>
-      <li v-if="user.age">Age: {{ user.age }}</li>
     </ul>
   </a>
 </template>
