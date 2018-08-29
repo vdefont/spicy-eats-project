@@ -33,7 +33,7 @@ button {
   align-items: center;
 }
 .desktop button {
-  width: 180px;
+  width: 200px;
   height: 100px;
   margin: 10px;
 }
