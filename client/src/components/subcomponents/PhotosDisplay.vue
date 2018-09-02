@@ -30,7 +30,7 @@ li {
   max-width: 500px;
 }
 .mobile li {
-  max-width: 200px;
+  max-width: 300px;
 }
 img {
   max-width: 100%;
@@ -39,6 +39,6 @@ img {
   max-height: 500px;
 }
 .mobile img {
-  max-height: 160px;
+  max-height: 240px;
 }
 </style>
