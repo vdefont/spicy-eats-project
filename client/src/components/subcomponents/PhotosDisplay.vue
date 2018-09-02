@@ -30,13 +30,13 @@ li {
   max-width: 500px;
 }
 .mobile li {
-  max-width: 500px;
+  max-width: 200px;
 }
 img {
   max-width: 100%;
 }
 .desktop img {
-  max-height: 200px;
+  max-height: 500px;
 }
 .mobile img {
   max-height: 160px;
