@@ -27,10 +27,10 @@ li {
   margin: 5px;
 }
 .desktop li {
-  max-width: 250px;
+  max-width: 500px;
 }
 .mobile li {
-  max-width: 200px;
+  max-width: 500px;
 }
 img {
   max-width: 100%;

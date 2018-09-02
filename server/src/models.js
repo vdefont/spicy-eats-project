@@ -15,7 +15,7 @@ sqlTypes[dataTypes.string] = "varchar(255)"
 sqlTypes[dataTypes.longString] = "text"
 sqlTypes[dataTypes.int] = "int"
 sqlTypes[dataTypes.smallDouble] = "double(2,1)"
-sqlTypes[dataTypes.image] = "varchar(50000)"
+sqlTypes[dataTypes.image] = "mediumtext"
 sqlTypes[dataTypes.boolean] = "bit"
 const quoteTypes = [
   dataTypes.shortString,
