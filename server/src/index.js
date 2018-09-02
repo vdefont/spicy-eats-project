@@ -11,7 +11,7 @@ const security = require('./security')
 
 var app = express()
 app.use(cors())
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '500mb', extended: true}))
 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream('serverAccess.log', {flags: 'a'})
